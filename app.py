@@ -47,6 +47,30 @@ def reverse_string(input: str) -> str:
     """
     return input[::-1]
 
+def weather(date: str) -> str:
+    """
+    Returns weather information for a given date.
+
+    Args:
+        date (str): The date in the format "YYYY-MM-DD".
+
+    Returns:
+        str: Weather information for the given date.
+             - "Sunny, 72°F" if the date matches today's date.
+             - "Rainy, 55°F" for all other dates.
+    """
+    try:
+        # Get today's date in the format "YYYY-MM-DD"
+        today = datetime.now().strftime("%Y-%m-%d")
+
+        # Return weather based on the date
+        if date == today:
+            return "Sunny, 72°F"
+        else:
+            return "Rainy, 55°F"
+    except Exception as e:
+        return f"Error: {e}"
+
 def main():
     # Load environment variables from .env file
     load_dotenv()
@@ -88,6 +112,11 @@ def main():
             name="reverse_string",
             func=reverse_string,
             description="Reverses a string. Input should be a single string."
+        ),
+        Tool(
+            name="get_weather",
+            func=weather,
+            description="Use this tool to get weather information for a specific date. Provide the date in the format 'YYYY-MM-DD', and it will return the weather for that day."
         )
     ]
 
@@ -110,7 +139,8 @@ def main():
     test_queries = [
         "What time is it right now?",
         "What is 25 * 4 + 10?",
-        "Reverse the string 'Hello World'"
+        "Reverse the string 'Hello World'",
+        "What's the weather like today?"
     ]
 
     print("Running example queries:\n")
